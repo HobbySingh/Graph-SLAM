@@ -12,8 +12,9 @@ class EdgeOdometry:
             vertex_ids (list[int]): The ids of all vertices constrained by this edge
             information (np.ndarray): The information matrix associated with the edge
             estimate (PoseSE2): The expected measurement 
-            vertices (list[graphslam.vertex.Vertex], optional): [description]. Defaults to None.
+            vertices (list[graphslam.vertex.Vertex], optional): A list of vertices constrained by the edge
         """
+        
         self.vertex_ids = vertex_ids
         self.information = information
         self.estimate = estimate
