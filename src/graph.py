@@ -30,9 +30,9 @@ class Graph:
         self._chi2 = sum((e.calc_chi2() for e in self._edges))
         return self._chi2
 
-    def optimize(self):
+    # def optimize(self):
 
-        #TODO:
+    #     #TODO:
 
     def plot(self, vertex_color='r', vertex_maker='o', vertex_markersize=3, edge_color='b', title=None):
 
