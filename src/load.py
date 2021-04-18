@@ -38,12 +38,13 @@ def data_loader(data_file):
 
             if(line[0] == "EDGE_SE2"):
                 
-                vertex_ids = [line[1], line[2]]
+                vertex_ids = [int(line[1]), int(line[2])]
                 arr = np.array([float(number) for number in line[3:]], dtype=np.float64)
 
                 estimate = PoseSE2(arr[:2], arr[2])
                 information = upper_triangular_matrix_to_full_matrix(arr[3:], 3)
                 e = EdgeOdometry(vertex_ids, information, estimate)
+
                 edges.append(e)
                 continue
 
