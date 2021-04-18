@@ -21,6 +21,16 @@ class EdgeOdometry:
         self.estimate = estimate
         self.vertices = vertices
 
+    def calc_error(self):
+
+        return (self.estimate - (self.vertices[1].pose - self.vertices[0].pose))
+
+    def calc_chi2(self):
+
+        err = self.calc_error()
+        return np.transpose(err.arr) @self.information @ err.arr
+
+
     def plot(self, color='b'):
 
         # import ipdb; ipdb.set_trace()
