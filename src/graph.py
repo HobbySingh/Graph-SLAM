@@ -1,12 +1,15 @@
-import numpy as np
+from functools import reduce
+
 import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d as Axes3D
-from functools import reduce
+import numpy as np
 from scipy.sparse import SparseEfficiencyWarning, lil_matrix
 from scipy.sparse.linalg import spsolve
 
-from pose_se2 import PoseSE2
 from chi2_grad_hess import _Chi2GradientHessian
+from edge_odometry import EdgeOdometry
+from pose_se2 import PoseSE2
+from vertex import Vertex
 
 EPS = np.finfo(float).eps
 
@@ -33,6 +36,26 @@ class Graph:
 
         for e in self._edges:
             e.vertices = [self._vertices[id_index_dict[v_id]] for v_id in e.vertex_ids]
+
+    def add_edge(self, vertices, measurement, information):
+        edge = EdgeOdometry(
+            vertex_ids=vertices, information=information, estimate=measurement
+        )
+        self._edges.append(edge)
+        self._link_edges()
+
+    def add_vertex(self, id, pose):
+        vertex = Vertex(vertex_id=id, pose=pose)
+        self._vertices.append(vertex)
+        self._link_edges()
+
+    def get_pose(self, idx):
+        vert = self._vertices[idx]
+        return vert.pose
+
+    def get_rt_matrix(self, idx):
+        pose = self.get_pose(idx)
+        return pose.get_rt_matrix()
 
     def calc_chi2(self):
         self._chi2 = sum((e.calc_chi2() for e in self._edges))[0, 0]
