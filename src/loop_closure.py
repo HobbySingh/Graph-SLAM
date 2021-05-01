@@ -1,0 +1,33 @@
+import icp
+import scipy
+import numpy as np
+from pose_se2 import PoseSE2
+
+'''
+Detects loop closures and adds the corresponding edge between the current
+pose and detected loop closure pose
+Input:
+    @param poses all poses excluding current pose
+    @param curr_pose pose of the vertex being added to the graph
+    @param curr_idx index of current pose
+    @param laser laser readings at every pose
+    @param g pose graph optimizer class object
+'''
+
+def find_loop_closure(curr_pose, curr_idx, laser, g):
+
+    kdTreeR = 4.25 
+    kdTree = scipy.spatial.cKDTree([g.get_pose(idx).toarray()[0:2] for idx in range(curr_idx-1)])
+    idxs  = kdTree.query_ball_point(curr_pose.arr[0:2], kdTreeR)
+
+    loopThresh = 0.15
+    for i in idxs:
+        with np.errstate(all='raise'):
+            try:
+                tf, dist, _, cov = icp.icp(laser[i], laser[curr_idx], np.eye(3),
+                        max_iterations=80, tolerance=0.0001)
+            except Exception as e:
+                continue
+            
+            if np.mean(dist) < loopThresh:
+                g.add_edge([curr_idx, i], PoseSE2.from_array(tf), np.linalg.inv(cov))
