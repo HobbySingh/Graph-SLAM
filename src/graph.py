@@ -122,7 +122,7 @@ class Graph:
                 self._gradient[:dim] = 0.0
 
             # run solver
-            dx = spsolve(self._hessian, -self._gradient)
+            dx = spsolve(self._hessian.tocsr(), -self._gradient)
 
             # apply
             for v, dxi in zip(self._vertices, np.split(dx, n)):

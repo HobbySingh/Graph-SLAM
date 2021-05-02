@@ -16,9 +16,13 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
         import atexit
 
         images = []
-        atexit.register(
-            lambda: imageio.mimsave(f"./slam_{int(time.time())}.gif", images, fps=10)
-        )
+
+        def fn():
+            print("Saving GIF")
+            imageio.mimsave(f"./slam_{int(time.time())}.gif", images, fps=20)
+            print("Done")
+
+        atexit.register(fn)
 
     with open(clf_file, "r") as f:
         lasers = []
@@ -58,7 +62,7 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
     min_x = float("inf")
     min_y = float("inf")
 
-    for od_idx, odom in tqdm(enumerate(odoms), total=len(odoms)):
+    for od_idx, odom in tqdm(enumerate(odoms[:3700]), total=len(odoms)):
         # Initialize
         if od_idx == 0:
             prev_odom = odom.copy()
@@ -91,7 +95,6 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
                     )
                 except Exception as e:
                     continue
-            print(tran)
             init_pose = tran
             pose = pose @ tran
             # breakpoint()
@@ -115,7 +118,9 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
                 )
 
                 pose_graph.optimize()
+                # print(vertex_idx, pose)
                 pose = pose_graph.get_rt_matrix(vertex_idx)
+                # print(vertex_idx, pose)
 
             # Draw trajectory and map
             traj = []
@@ -147,7 +152,8 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
 
             plt.cla()
             plt.axis([min_x, max_x, min_y, max_y])
-
+            # fig = plt.gcf()
+            # fig.set_size_inches((9, 9), forward=False)
             traj = np.array(traj)
             plt.plot(traj[:, 0], traj[:, 1], "-g")
             plt.plot(point_cloud[:, 0], point_cloud[:, 1], ".b", markersize=0.1)

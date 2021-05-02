@@ -14,7 +14,7 @@ if __name__ == "__main__":
         # breakpoint()
         name = name.split("_")[-2]
 
-    final_graph = frontend.run(data_file, name, save_gif=False, plot_every=100)
+    final_graph = frontend.run(data_file, name, save_gif=True, plot_every=100)
     # g = data_loader(data_file)
 
     # g.plot(title=f"Before_{name}")

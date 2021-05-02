@@ -17,7 +17,7 @@ Input:
 
 
 def find_loop_closure(curr_pose, curr_idx, laser, g):
-    print("Attempt Loop Closure")
+    print("Attempt: Loop Closure")
     kdTreeR = 4.25
     poses = np.array(
         [g.get_pose(idx).arr[0:2] for idx in range(curr_idx - 1)]
@@ -25,10 +25,11 @@ def find_loop_closure(curr_pose, curr_idx, laser, g):
     # breakpoint()
     kdTree = scipy.spatial.cKDTree(poses)
     # breakpoint()
-    idxs = kdTree.query_ball_point(curr_pose.arr[0:2].T, kdTreeR)
+    idxs = kdTree.query_ball_point(curr_pose.arr[0:2].T, kdTreeR)[0]
 
     loopThresh = 0.15
     for i in idxs:
+        # breakpoint()
         with np.errstate(all="raise"):
             try:
                 tf, dist, _, cov = icp.icp(
@@ -39,9 +40,11 @@ def find_loop_closure(curr_pose, curr_idx, laser, g):
                     tolerance=0.0001,
                 )
             except Exception as e:
+                print("ICP Exception", e)
                 continue
 
             if np.mean(dist) < loopThresh:
+                print("Success: Loop Closure")
                 g.add_edge(
-                    [curr_idx, i], PoseSE2.from_rt_matrix()(tf), np.linalg.inv(cov)
+                    [curr_idx, i], PoseSE2.from_rt_matrix(tf), np.linalg.inv(cov)
                 )

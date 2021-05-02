@@ -56,3 +56,6 @@ class PoseSE2:
 
     def copy(self):
         return PoseSE2(self.position, self.orientation)
+
+    def __str__(self):
+        return str(self.arr)

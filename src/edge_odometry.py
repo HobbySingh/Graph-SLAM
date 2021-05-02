@@ -26,7 +26,9 @@ class EdgeOdometry:
 
     def calc_error(self):
 
-        return self.estimate - (self.vertices[1].pose - self.vertices[0].pose)
+        err = self.estimate - (self.vertices[1].pose - self.vertices[0].pose)
+        # print(err)
+        return err
 
     def calc_chi2(self):
 
