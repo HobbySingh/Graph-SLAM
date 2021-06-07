@@ -1,10 +1,11 @@
 import numpy as np
 
-from pose_se2 import PoseSE2
 from edge_odometry import EdgeOdometry
-from vertex import Vertex
-from util import upper_triangular_matrix_to_full_matrix
 from graph import Graph
+from pose_se2 import PoseSE2
+from util import upper_triangular_matrix_to_full_matrix
+from vertex import Vertex
+
 
 def data_loader(data_file):
     """
@@ -27,8 +28,8 @@ def data_loader(data_file):
 
         for line in file.readlines():
             line = line.split()
-            
-            if(line[0] == "VERTEX_SE2"):
+
+            if line[0] == "VERTEX_SE2":
                 vertex_id = int(line[1])
                 arr = np.array([float(number) for number in line[2:]], dtype=np.float64)
                 p = PoseSE2(arr[:2], arr[2])
@@ -36,8 +37,8 @@ def data_loader(data_file):
                 vertices.append(v)
                 continue
 
-            if(line[0] == "EDGE_SE2"):
-                
+            if line[0] == "EDGE_SE2":
+
                 vertex_ids = [int(line[1]), int(line[2])]
                 arr = np.array([float(number) for number in line[3:]], dtype=np.float64)
 
@@ -49,5 +50,4 @@ def data_loader(data_file):
                 continue
 
     return Graph(edges, vertices)
-
 
