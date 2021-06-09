@@ -19,7 +19,7 @@ def run(clf_file, name, save_gif=True, plot_every=1000):
 
         def fn():
             print("Saving GIF")
-            imageio.mimsave(f"./slam_{int(time.time())}.gif", images, fps=20)
+            imageio.mimsave(f"./../results/slam_{int(time.time())}.gif", images, fps=20)
             print("Done")
 
         atexit.register(fn)

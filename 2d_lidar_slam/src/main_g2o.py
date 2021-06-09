@@ -15,8 +15,8 @@ if __name__ == "__main__":
 
     g = data_loader(data_file)
 
-    g.plot(title=f"Before_{name}")
+    g.plot(title=f"./../results/Before_{name}")
 
     print("Error before optimization: ", g.calc_chi2())
     g.optimize()
-    g.plot(title=f"After_{name}")
+    g.plot(title=f"./../results/After_{name}")
