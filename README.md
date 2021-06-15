@@ -2,7 +2,7 @@
 
 In this project we have implemented a graph-based SLAM pipeline using 2D laser data and odometry information. We also extended our implementation to accomodate visual data in our SLAM frontend.
 
-These are two seperate Graph-SLAM pipelines.
+These are two seperate Graph-SLAM pipelines. The individual setup and execution instructions are provided in README's of respective folders.
 
 ## 2D Lidar SLAM
 In this we implement custom frontend and backend modules. Backend consists of custom 2D Pose Graph construction and optimization implementation. Frontend uses odometry, lidar scan and scan matching to compute graph poses. Loop closure constraints are added using ICP. We first implemented (main_g2o.py) the backend graph optimization using the processed g2o data from [Luca Carlone datasets](https://lucacarlone.mit.edu/datasets/). Once this was achieved, we moved on to using the raw data provided by [Intel Research Lab](http://ais.informatik.uni-freiburg.de/slamevaluation/datasets.php) and building our own pose graph from the laser and odometry information.
