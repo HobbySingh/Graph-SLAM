@@ -14,7 +14,7 @@ python main_clf.py ../data/intel.clf
 
 Pose Graph before optimization |  Pose Graph after optimization
 :-------------------------:|:-------------------------:
-![](results/graph_optimization/Before_INTEL.png)  |  ![](2d_lidar_slam/results/graph_optimization/After_INTEL.png)
+![](results/graph_optimization/Before_INTEL.png)  |  ![](results/graph_optimization/After_INTEL.png)
 
 Real-Time Pose Graph Generation and Optimization after Loop Closures
 :-------------------------:|
