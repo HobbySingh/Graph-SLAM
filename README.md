@@ -29,11 +29,19 @@ Sequence 00 | Sequence 05 | Sequence 07
 ## References
 
 [1] G. Grisetti, R. Kummerle, C. Stachniss, and W. Burgard, “A tutorial on graph-based slam,” IEEE Intelligent Transportation Systems Magazine, vol. 2, no. 4, pp. 31–43, 2010.
+
 [2] “Python graph slam reference repository(backend).” https://github.com/JeffLIrion/python-graphslam.
+
 [3] “g2o python wrapper.” https://github.com/uoip/g2opy.
+
 [4] “Graph slam formulation.” https://github.com/AtsushiSakai/PythonRobotics/blob/master/SLAM/GraphBasedSLAM/graphSLAM_formulation.pdf.
+
 [5] “Python graph slam reference repository(frontend).” https://github.com/goktug97/PyGraphSLAM.
+
 [6] “Icp implementation for frontend.” https://github.com/ClayFlannigan/icp.
+
 [7] “Monocular visual slam.” https://github.com/sakshamjindal/Monocular-MiniSLAM.
+
 [8] “Repository of laser and odometry data in carmen format at uni freiburg.” http://ais.informatik.uni-freiburg.de/slamevaluation/index.php.
+
 [9] “g2o format datasets by luca carlone.” https://lucacarlone.mit.edu/datasets/
